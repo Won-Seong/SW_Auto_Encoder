@@ -4,8 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f17b5342-f55d-47a6-b244-2accb7c1d89a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -28,9 +27,17 @@
     <Folder Include="auto_encoder\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="auto_encoder\auto_encoder.py" />
+    <Compile Include="auto_encoder\decoder.py" />
     <Compile Include="auto_encoder\encoder.py" />
+    <Compile Include="components\attn_b.py" />
     <Compile Include="components\normalize.py" />
     <Compile Include="components\resnet_b.py" />
+    <Compile Include="components\sampling.py" />
+    <Compile Include="helper\data_generator.py" />
+    <Compile Include="helper\painter.py" />
+    <Compile Include="helper\trainer.py" />
+    <Compile Include="main.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|condatorch" />
