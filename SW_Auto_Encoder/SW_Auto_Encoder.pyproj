@@ -35,6 +35,7 @@
     <Compile Include="components\resnet_b.py" />
     <Compile Include="components\sampling.py" />
     <Compile Include="helper\data_generator.py" />
+    <Compile Include="helper\loader.py" />
     <Compile Include="helper\painter.py" />
     <Compile Include="helper\trainer.py" />
     <Compile Include="main.py" />
