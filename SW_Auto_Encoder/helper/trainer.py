@@ -86,9 +86,10 @@ class Trainer():
             
             if accelerator.is_main_process:
                 if best_loss > epoch_loss:
+                    unwrapped_model = accelerator.unwrap_model(model)
                     best_loss = epoch_loss
                     accelerator.save({
-                        "model_state_dict": model.state_dict(),
+                        "model_state_dict": unwrapped_model.state_dict(),
                         "optimizer_state_dict": optimizer.state_dict(),
                         "epoch": epoch,
                         "best_loss": best_loss,
