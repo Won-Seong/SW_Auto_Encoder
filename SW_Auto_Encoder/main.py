@@ -17,20 +17,24 @@ if __name__ == '__main__':
     pt = Painter()
     print(dl)
     
-    #a = next(iter(dl))[0][0:2]
-    #pt.show_or_save_images(a)
+    a = next(iter(dl))[0][0:2]
+    pt.show_or_save_images(a)
     
-    ae = AutoEncoder(config_path = 'configs/fashion_mnist_config.yaml', device = device)
+    ae = AutoEncoder(config_path = 'configs/fashion_mnist_config.yaml').to(device)
     #ae.load(file_name = 'ae_epoch2')
-    #d = ae.reconstruct(a)
-    #pt.show_or_save_images(d)
+    
     ld = Loader()
     ld.load_with_acc(file_name = 'aaa_epoch1',model = ae)
     
+    d = ae.reconstruct(a.to(device))
+    pt.show_or_save_images(d)
     
-    tr = Trainer(ae, loss_fn = ae.loss)
+    dg.make_encoded_data('datasets/aaa.pth', dl, ae)
     
-    tr.train_with_acc(dl, 10, 'aaa')
+    
+    #tr = Trainer(ae, loss_fn = ae.loss)
+    
+    #tr.train_with_acc(dl, 10, 'aaa')
    
    
     

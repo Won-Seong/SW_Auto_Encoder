@@ -367,3 +367,5 @@ datasets/
 models/
 /datasets/
 /models/
+*.pth
+*.pt

@@ -1,8 +1,6 @@
 import torch
 import torch.nn as nn
-import numpy as np
 from components.normalize import Normalize
-
 from components.resnet_b import ResnetBlock
 from components.sampling import Downsample
 

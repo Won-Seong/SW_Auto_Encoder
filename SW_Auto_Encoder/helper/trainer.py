@@ -10,13 +10,17 @@ class Trainer():
                  model: nn.Module,
                  loss_fn: Callable,
                  optimizer: torch.optim.Optimizer = None,
+                 scheduler: torch.optim.lr_scheduler = None,
                  device: torch.device = torch.device("cpu"),
                  no_label : bool = True):
         
         self.model = model.to(device)
         self.optimizer = optimizer
         if self.optimizer is None:
-            self.optimizer = torch.optim.Adam(self.model.parameters(), lr = 1e-4)
+            self.optimizer = torch.optim.Adam(self.model.parameters(), lr = 1e-3)
+        self.scheduler = scheduler
+        if self.scheduler is None:
+            self.scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optimizer, gamma = 0.95)                                                               
         self.loss_fn = loss_fn
         self.device = device
         self.no_label = no_label
@@ -47,7 +51,7 @@ class Trainer():
                 epoch_loss += loss.item()
             
             log_string = f"Loss at epoch {epoch}: {epoch_loss:.3f}"
-
+            self.scheduler.step()
             # Storing the model
             if best_loss > epoch_loss:
                 best_loss = epoch_loss
@@ -58,8 +62,8 @@ class Trainer():
     def train_with_acc(self, dl : DataLoader, epochs : int, file_name : str):
         self.model.train()
         accelerator = Accelerator(mixed_precision = 'no')
-        model, optimizer, training_dataloader= accelerator.prepare(
-        self.model, self.optimizer, dl)
+        model, optimizer, training_dataloader, scheduler = accelerator.prepare(
+        self.model, self.optimizer, dl, self.scheduler)
         best_loss = float("inf")
         
         for epoch in range(1, epochs + 1):
@@ -81,6 +85,7 @@ class Trainer():
                 optimizer.step()
                 
                 epoch_loss += loss.item()
+            scheduler.step()
             
             log_string = f"Loss at epoch {epoch}: {epoch_loss:.3f}"
             

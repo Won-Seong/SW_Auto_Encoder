@@ -3,13 +3,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f17b5342-f55d-47a6-b244-2accb7c1d89a</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
+    <ProjectHome>
+    </ProjectHome>
     <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>SW_Auto_Encoder</Name>
+    <Name>sw-auto-encoder</Name>
     <RootNamespace>SW_Auto_Encoder</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|condatorch</InterpreterId>
   </PropertyGroup>
