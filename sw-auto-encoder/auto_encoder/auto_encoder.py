@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from auto_encoder.Decoder import Decoder
+from auto_encoder.decoder import Decoder
 from auto_encoder.encoder import Encoder
 import yaml
 
