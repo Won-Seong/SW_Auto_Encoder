@@ -11,7 +11,7 @@
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>sw-auto-encoder</Name>
-    <RootNamespace>SW_Auto_Encoder</RootNamespace>
+    <RootNamespace>sw-auto-encoder</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|condatorch</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
