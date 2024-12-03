@@ -50,7 +50,7 @@ class Trainer():
                 
                 epoch_loss += loss.item()
             
-            log_string = f"Loss at epoch {epoch}: {epoch_loss:.3f}"
+            log_string = f"Loss at epoch {epoch}: {epoch_loss / len(dl):.3f}"
             self.scheduler.step()
             # Storing the model
             if best_loss > epoch_loss:
@@ -59,17 +59,18 @@ class Trainer():
                 log_string += " --> Best model ever (stored)"
             print(log_string)
          
-    def train_with_acc(self, dl : DataLoader, epochs : int, file_name : str):
+    def accelerated_train(self, dl : DataLoader, epochs : int, file_name : str):
         self.model.train()
-        accelerator = Accelerator(mixed_precision = 'no')
+        accelerator = Accelerator(mixed_precision = 'no') 
         model, optimizer, training_dataloader, scheduler = accelerator.prepare(
         self.model, self.optimizer, dl, self.scheduler)
         best_loss = float("inf")
         
         for epoch in range(1, epochs + 1):
             epoch_loss = 0.0
+            progress_bar = tqdm(training_dataloader, leave=False, desc=f"Epoch {epoch}/{epochs}", colour="#005500", disable = not accelerator.is_local_main_process)
             
-            for _, batch in enumerate(tqdm(training_dataloader, leave=False, desc=f"Epoch {epoch}/{epochs}", colour="#005500")):
+            for batch in progress_bar:
                 
                 if self.no_label: 
                     if type(batch) == list:
@@ -85,9 +86,10 @@ class Trainer():
                 optimizer.step()
                 
                 epoch_loss += loss.item()
+                progress_bar.set_postfix(loss=epoch_loss / len(progress_bar))
             scheduler.step()
             
-            log_string = f"Loss at epoch {epoch}: {epoch_loss:.3f}"
+            log_string = f"Loss at epoch {epoch}: {epoch_loss / len(dl):.3f}"
             
             if accelerator.is_main_process:
                 if best_loss > epoch_loss:

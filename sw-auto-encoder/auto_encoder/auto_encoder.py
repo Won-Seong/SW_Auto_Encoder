@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from auto_encoder.decoder import Decoder
@@ -26,11 +25,6 @@ class AutoEncoder(nn.Module):
     
     def loss(self, x, x_hat):
         return F.mse_loss(x, x_hat)
-        
-    # def load(self, file_name : str):
-    #     self.load_state_dict(torch.load('models/' + file_name + '.pt', map_location = self.device))
-    #     self.eval()
-    #     print("=====Model loaded!=====")
         
     def forward(self, x):
         return self.reconstruct(x)

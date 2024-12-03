@@ -12,6 +12,7 @@ class Encoder(nn.Module):
         self.num_resolutions = len(channels_multipliers)
         self.num_res_blocks = num_res_blocks
         self.in_channels = in_channels
+        self.z_channels = z_channels
         self.nonlinearity = nn.SiLU()
         
         # downsampling
