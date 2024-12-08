@@ -31,7 +31,7 @@
     <Compile Include="auto_encoder\auto_encoder.py" />
     <Compile Include="auto_encoder\decoder.py" />
     <Compile Include="auto_encoder\encoder.py" />
-    <Compile Include="auto_encoder\variationa_auto_encoder.py" />
+    <Compile Include="auto_encoder\variational_auto_encoder.py" />
     <Compile Include="components\attn_b.py" />
     <Compile Include="components\distributions.py" />
     <Compile Include="components\normalize.py" />

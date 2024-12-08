@@ -1,6 +1,6 @@
 import torch
 from auto_encoder.auto_encoder import AutoEncoder
-from auto_encoder.variationa_auto_encoder import VariationalAutoEncoder
+from auto_encoder.variational_auto_encoder import VariationalAutoEncoder
 import os
 
 from helper.data_generator import DataGenerator
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     pt = Painter()
     
     a = next(iter(dl))[0][0:2]
-    pt.show_or_save_images(a)s
+    pt.show_or_save_images(a)
     
     ae = VariationalAutoEncoder(config_path = 'configs/fashion_mnist_config.yaml',
                                 embed_dim=64).to(device)
