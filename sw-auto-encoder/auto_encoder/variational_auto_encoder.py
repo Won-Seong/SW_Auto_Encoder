@@ -30,8 +30,9 @@ class VariationalAutoEncoder(nn.Module):
         dec = self.decoder(z)
         return dec
     
-    def loss(self, x, x_hat):
-        return F.mse_loss(x, x_hat)
+    def loss(self, x, kld_weight = 1e-6):
+        x_hat, posterior = self(x)
+        return F.mse_loss(x, x_hat) + kld_weight * posterior.kl()
 
     def forward(self, input, sample_posterior=True):
         posterior = self.encode(input)
@@ -40,4 +41,4 @@ class VariationalAutoEncoder(nn.Module):
         else:
             z = posterior.mode()
         dec = self.decode(z)
-        return dec#, posterior
+        return dec, posterior

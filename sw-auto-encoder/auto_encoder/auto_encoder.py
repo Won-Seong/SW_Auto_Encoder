@@ -23,7 +23,8 @@ class AutoEncoder(nn.Module):
     def reconstruct(self, x):
         return self.decode(self.encode(x))
     
-    def loss(self, x, x_hat):
+    def loss(self, x):
+        x_hat = self(x)
         return F.mse_loss(x, x_hat)
         
     def forward(self, x):

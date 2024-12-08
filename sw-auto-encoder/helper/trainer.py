@@ -41,13 +41,10 @@ class Trainer():
                         x = batch.to(self.device)
                 else: x, y = batch[0].to(self.device), batch[1].to(self.device)
                 
-                x_hat = self.model(x)
-                loss = self.loss_fn(x, x_hat)
-                
+                loss = self.loss_fn(x)
                 self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
-                
                 epoch_loss += loss.item()
             
             log_string = f"Loss at epoch {epoch}: {epoch_loss / len(dl):.3f}"
@@ -79,18 +76,15 @@ class Trainer():
                         x = batch.to(accelerator.device)
                 else: x, y = batch[0].to(accelerator.device), batch[1].to(accelerator.device)
                 
-                x_hat = model(x)
-                loss = self.loss_fn(x, x_hat)
+                loss = self.loss_fn(x)
                 optimizer.zero_grad()
                 accelerator.backward(loss)
                 optimizer.step()
-                
                 epoch_loss += loss.item()
                 progress_bar.set_postfix(loss=epoch_loss / len(progress_bar))
+                
             scheduler.step()
-            
             log_string = f"Loss at epoch {epoch}: {epoch_loss / len(dl):.3f}"
-            
             if accelerator.is_main_process:
                 if best_loss > epoch_loss:
                     unwrapped_model = accelerator.unwrap_model(model)
@@ -107,7 +101,6 @@ class Trainer():
                 print(log_string)
             accelerator.wait_for_everyone()
         
-
     def evaluate(self, dataloader : DataLoader):
         self.model.eval()
         total_loss = 0.0
